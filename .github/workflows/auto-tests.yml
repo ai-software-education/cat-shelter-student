@@ -40,7 +40,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Даем права на запуск (на всякий случай)
+      # Даем права на запуск
       - name: Make start.sh executable
         run: chmod +x start.sh
 
@@ -66,10 +66,13 @@ jobs:
           pip install -r requirements.txt
 
       - name: Run Pytest
+        timeout-minutes: 3
+        run: pytest -v --base-url=http://localhost:3000 --alluredir=allure-results
+
+      - name: Report timeout if occurred
+        if: failure()
         run: |
-          pytest -v \
-            --base-url=http://localhost:3000 \
-            --alluredir=allure-results
+          echo "::error title=Timeout::Тесты прерваны по ограничению времени (3 минуты)"
 
       - name: Install Allure CLI
         run: |

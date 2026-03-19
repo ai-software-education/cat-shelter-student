@@ -4,3 +4,4 @@ PyYAML==6.0.2
 allure-pytest==2.13.5
 openapi-core==0.19.4
 pytest-base-url==2.0.0
+pytest-timeout>=2.3.0
