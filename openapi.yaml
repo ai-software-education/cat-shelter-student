@@ -1,0 +1,698 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered and token returned"
+          },
+          "400": {
+            "description": "Validation error (e.g. short password or empty fields)."
+          },
+          "409": {
+            "description": "A user with this login already exists."
+          }
+        },
+        "summary": "Register a new user",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Returns JWT token."
+          },
+          "400": {
+            "description": "Invalid input format or missing fields."
+          },
+          "401": {
+            "description": "Invalid login or password."
+          }
+        },
+        "summary": "Login with credentials",
+        "tags": [
+          "Authentication"
+        ]
+      }
+    },
+    "/users": {
+      "get": {
+        "description": "Returns a list of all registered users.",
+        "operationId": "UsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "List all users",
+        "tags": [
+          "Users Management"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "Retrieves user details and the list of cats they have adopted.",
+        "operationId": "UsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found."
+          },
+          "400": {
+            "description": "Invalid ID format provided."
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get user profile",
+        "tags": [
+          "Users Management"
+        ]
+      },
+      "delete": {
+        "description": "Permanently removes a user. Note: Associated cats will remain in the system but will become ownerless (SET NULL).",
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "User ID to delete",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully."
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete user profile",
+        "tags": [
+          "Users Management"
+        ]
+      }
+    },
+    "/users/{id}/cats": {
+      "get": {
+        "description": "Returns user profile with the list of their adopted cats.",
+        "operationId": "UsersController_getUserCats",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "User ID",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserEntity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all cats adopted by a specific user",
+        "tags": [
+          "Users Management"
+        ]
+      }
+    },
+    "/cats": {
+      "post": {
+        "description": "Creates a new cat record in the database. The name must be unique to avoid identification errors.",
+        "operationId": "CatsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The cat has been successfully registered."
+          },
+          "400": {
+            "description": "Invalid input data."
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          },
+          "409": {
+            "description": "Conflict: A cat with this name already exists."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Register a new cat",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "get": {
+        "description": "Returns a list of all cats. Supports filtering by breed, adoption status and age (kittens).",
+        "operationId": "CatsController_findAll",
+        "parameters": [
+          {
+            "name": "breed",
+            "required": false,
+            "in": "query",
+            "description": "Filter cats by specific breed",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isAdopted",
+            "required": false,
+            "in": "query",
+            "description": "Filter by adoption status (true/false)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isKitten",
+            "required": false,
+            "in": "query",
+            "description": "Filter only cats younger than 1 year",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Search shelter database",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    },
+    "/cats/{id}": {
+      "patch": {
+        "description": "Updates specific fields like name, breed, or history. System fields (isAdopted) should not be modified here.",
+        "operationId": "CatsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unique numerical ID of the cat",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cat info updated successfully."
+          },
+          "400": {
+            "description": "Invalid input or ID"
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          },
+          "404": {
+            "description": "Cat not found."
+          },
+          "409": {
+            "description": "New name already taken"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update cat information",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "get": {
+        "description": "Returns full information about a specific cat, including history and owner details if adopted.",
+        "operationId": "CatsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unique numerical ID of the cat",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cat data retrieved successfully."
+          },
+          "400": {
+            "description": "Invalid ID format. Expected an integer."
+          },
+          "404": {
+            "description": "Cat not found."
+          }
+        },
+        "summary": "Get cat details",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "delete": {
+        "description": "Permanently deletes a cat record from the database.",
+        "operationId": "CatsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Record deleted successfully."
+          },
+          "400": {
+            "description": "Invalid ID format. Expected an integer."
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          },
+          "404": {
+            "description": "Cat not found, cannot delete."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove cat from system",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    },
+    "/cats/{id}/adopt": {
+      "patch": {
+        "description": "Links a cat to a specific user. Sets adoption status to true and records the current timestamp.",
+        "operationId": "CatsController_adopt",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "number",
+                    "description": "Internal ID of the adopter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Adoption process completed."
+          },
+          "400": {
+            "description": "Cat is already adopted or invalid user ID."
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          },
+          "404": {
+            "description": "Cat or User not found."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Process adoption",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    },
+    "/stats/summary": {
+      "get": {
+        "operationId": "StatsController_getSummary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Total counts and adoption percentage"
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get general shelter metrics",
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/stats/breeds": {
+      "get": {
+        "operationId": "StatsController_getBreedStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of breeds with counts"
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Distribution of cats by breeds",
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/stats/top-adopters": {
+      "get": {
+        "description": "Returns top 5 users who have adopted the most cats",
+        "operationId": "StatsController_getTopAdopters",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of top adopters"
+          },
+          "401": {
+            "description": "Not authorized: No token provided or token invalid."
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get most active adopters",
+        "tags": [
+          "Statistics"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Приют для кошек",
+    "description": "Система управления кошками и пользователями",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Авторизация и регистрация"
+    },
+    {
+      "name": "cats",
+      "description": "Операции с животными"
+    },
+    {
+      "name": "users",
+      "description": "Операции с пользователями"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "Ivan",
+            "description": "First name of the user/volunteer",
+            "minLength": 2
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Ivanov",
+            "description": "Last name of the user/volunteer",
+            "minLength": 2
+          },
+          "login": {
+            "type": "string",
+            "example": "vanya_pro",
+            "description": "Unique login"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "minLength": 6
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName",
+          "login",
+          "password"
+        ]
+      },
+      "LoginDto": {
+        "type": "object",
+        "properties": {
+          "login": {
+            "type": "string",
+            "example": "vanya_pro",
+            "description": "The unique username of the account"
+          },
+          "password": {
+            "type": "string",
+            "example": "password123",
+            "description": "The account password"
+          }
+        },
+        "required": [
+          "login",
+          "password"
+        ]
+      },
+      "UserEntity": {
+        "type": "object",
+        "properties": {
+
+        }
+      },
+      "CreateCatDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Barsik",
+            "description": "The official name of the cat for registration",
+            "minLength": 2
+          },
+          "age": {
+            "type": "number",
+            "example": 2,
+            "description": "Age of the cat in years",
+            "minimum": 0
+          },
+          "breed": {
+            "type": "string",
+            "example": "Siamese",
+            "description": "Breed or closest phenotype"
+          },
+          "history": {
+            "type": "string",
+            "example": "Found in a park during winter 2024",
+            "description": "Background story of how the cat arrived at the shelter"
+          },
+          "description": {
+            "type": "string",
+            "example": "A very friendly and playful cat, loves children.",
+            "description": "Detailed characteristic or personality description"
+          }
+        },
+        "required": [
+          "name",
+          "age",
+          "breed"
+        ]
+      },
+      "UpdateCatDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Barsik"
+          },
+          "age": {
+            "type": "number",
+            "example": 3
+          },
+          "breed": {
+            "type": "string",
+            "example": "Siamese"
+          },
+          "history": {
+            "type": "string",
+            "example": "Healthy and active"
+          },
+          "description": {
+            "type": "string",
+            "example": "Loves playing with balls"
+          }
+        }
+      }
+    }
+  }
+}
