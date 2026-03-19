@@ -1,0 +1,532 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/cats": {
+      "post": {
+        "description": "Creates a new cat record in the database. The name must be unique to avoid identification errors.",
+        "operationId": "CatsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The cat has been successfully registered."
+          },
+          "400": {
+            "description": "Invalid input data."
+          },
+          "409": {
+            "description": "Conflict: A cat with this name already exists."
+          }
+        },
+        "summary": "Register a new cat",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "get": {
+        "description": "Returns a list of all cats. Supports filtering by breed, adoption status and age (kittens).",
+        "operationId": "CatsController_findAll",
+        "parameters": [
+          {
+            "name": "breed",
+            "required": false,
+            "in": "query",
+            "description": "Filter cats by specific breed",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isAdopted",
+            "required": false,
+            "in": "query",
+            "description": "Filter by adoption status (true/false)",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isKitten",
+            "required": false,
+            "in": "query",
+            "description": "Filter only cats younger than 1 year",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        },
+        "summary": "Search shelter database",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    },
+    "/cats/{id}": {
+      "patch": {
+        "description": "Updates specific fields like name, breed, or history. System fields (isAdopted) should not be modified here.",
+        "operationId": "CatsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unique numerical ID of the cat",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Cat info updated successfully."
+          },
+          "400": {
+            "description": "Invalid input or ID"
+          },
+          "404": {
+            "description": "Cat not found."
+          },
+          "409": {
+            "description": "New name already taken"
+          }
+        },
+        "summary": "Update cat information",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "get": {
+        "description": "Returns full information about a specific cat, including history and owner details if adopted.",
+        "operationId": "CatsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unique numerical ID of the cat",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cat data retrieved successfully."
+          },
+          "400": {
+            "description": "Invalid ID format. Expected an integer."
+          },
+          "404": {
+            "description": "Cat not found."
+          }
+        },
+        "summary": "Get cat details",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "delete": {
+        "description": "Permanently deletes a cat record from the database.",
+        "operationId": "CatsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Record deleted successfully."
+          },
+          "400": {
+            "description": "Invalid ID format. Expected an integer."
+          },
+          "404": {
+            "description": "Cat not found, cannot delete."
+          }
+        },
+        "summary": "Remove cat from system",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    },
+    "/cats/{id}/adopt": {
+      "patch": {
+        "description": "Links a cat to a specific user. Sets adoption status to true and records the current timestamp.",
+        "operationId": "CatsController_adopt",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": {
+                    "type": "number",
+                    "description": "Internal ID of the adopter"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Adoption process completed."
+          },
+          "400": {
+            "description": "Cat is already adopted or invalid user ID."
+          },
+          "404": {
+            "description": "Cat or User not found."
+          }
+        },
+        "summary": "Process adoption",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    },
+    "/users": {
+      "post": {
+        "operationId": "UsersController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUserDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User successfully created."
+          },
+          "400": {
+            "description": "Validation failed"
+          }
+        },
+        "summary": "Create new user/volunteer",
+        "tags": [
+          "Users Management"
+        ]
+      },
+      "get": {
+        "description": "Returns a list of all registered users.",
+        "operationId": "UsersController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "summary": "List all users",
+        "tags": [
+          "Users Management"
+        ]
+      }
+    },
+    "/users/{id}": {
+      "get": {
+        "description": "Retrieves user details and the list of cats they have adopted.",
+        "operationId": "UsersController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found."
+          },
+          "400": {
+            "description": "Invalid ID format provided."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        },
+        "summary": "Get user profile",
+        "tags": [
+          "Users Management"
+        ]
+      },
+      "delete": {
+        "description": "Permanently removes a user. Note: Associated cats will remain in the system but will become ownerless (SET NULL).",
+        "operationId": "UsersController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "User ID to delete",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted successfully."
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "404": {
+            "description": "User not found."
+          }
+        },
+        "summary": "Delete user profile",
+        "tags": [
+          "Users Management"
+        ]
+      }
+    },
+    "/users/{id}/cats": {
+      "get": {
+        "description": "Returns user profile with the list of their adopted cats.",
+        "operationId": "UsersController_getUserCats",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "User ID",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserEntity"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID"
+          },
+          "404": {
+            "description": "User not found"
+          }
+        },
+        "summary": "Get all cats adopted by a specific user",
+        "tags": [
+          "Users Management"
+        ]
+      }
+    },
+    "/stats/summary": {
+      "get": {
+        "operationId": "StatsController_getSummary",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Total counts and adoption percentage"
+          }
+        },
+        "summary": "Get general shelter metrics",
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/stats/breeds": {
+      "get": {
+        "operationId": "StatsController_getBreedStats",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of breeds with counts"
+          }
+        },
+        "summary": "Distribution of cats by breeds",
+        "tags": [
+          "Statistics"
+        ]
+      }
+    },
+    "/stats/top-adopters": {
+      "get": {
+        "description": "Returns top 5 users who have adopted the most cats",
+        "operationId": "StatsController_getTopAdopters",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of top adopters"
+          }
+        },
+        "summary": "Get most active adopters",
+        "tags": [
+          "Statistics"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Приют для кошек",
+    "description": "Система управления кошками и пользователями (без регистрации)",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [
+    {
+      "name": "cats",
+      "description": "Операции с животными"
+    },
+    {
+      "name": "users",
+      "description": "Операции с пользователями"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateCatDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Barsik",
+            "description": "The official name of the cat for registration",
+            "minLength": 2
+          },
+          "age": {
+            "type": "number",
+            "example": 2,
+            "description": "Age of the cat in years",
+            "minimum": 0
+          },
+          "breed": {
+            "type": "string",
+            "example": "Siamese",
+            "description": "Breed or closest phenotype"
+          },
+          "history": {
+            "type": "string",
+            "example": "Found in a park during winter 2024",
+            "description": "Background story of how the cat arrived at the shelter"
+          },
+          "description": {
+            "type": "string",
+            "example": "A very friendly and playful cat, loves children.",
+            "description": "Detailed characteristic or personality description"
+          }
+        },
+        "required": [
+          "name",
+          "age",
+          "breed"
+        ]
+      },
+      "UpdateCatDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Barsik"
+          },
+          "age": {
+            "type": "number",
+            "example": 3
+          },
+          "breed": {
+            "type": "string",
+            "example": "Siamese"
+          },
+          "history": {
+            "type": "string",
+            "example": "Healthy and active"
+          },
+          "description": {
+            "type": "string",
+            "example": "Loves playing with balls"
+          }
+        }
+      },
+      "CreateUserDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "example": "Ivan",
+            "description": "First name of the user/volunteer",
+            "minLength": 2
+          },
+          "lastName": {
+            "type": "string",
+            "example": "Ivanov",
+            "description": "Last name of the user/volunteer",
+            "minLength": 2
+          }
+        },
+        "required": [
+          "firstName",
+          "lastName"
+        ]
+      },
+      "UserEntity": {
+        "type": "object",
+        "properties": {
+
+        }
+      }
+    }
+  }
+}
