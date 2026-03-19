@@ -1,0 +1,163 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/cats": {
+      "post": {
+        "description": "Creates a new cat record in the database. The name must be unique to avoid identification errors.",
+        "operationId": "CatsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCatDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The cat has been successfully registered."
+          },
+          "400": {
+            "description": "Invalid input data."
+          },
+          "409": {
+            "description": "Conflict: A cat with this name already exists."
+          }
+        },
+        "summary": "Register a new cat",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "get": {
+        "operationId": "CatsController_findAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Return list of cats."
+          }
+        },
+        "summary": "Get all cats in the shelter",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    },
+    "/cats/{id}": {
+      "get": {
+        "description": "Retrieves full information about a specific cat by its unique ID.",
+        "operationId": "CatsController_findOne",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Unique numerical ID of the cat",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cat data retrieved successfully."
+          },
+          "400": {
+            "description": "Invalid ID format. Expected an integer."
+          },
+          "404": {
+            "description": "Cat not found."
+          }
+        },
+        "summary": "Get cat details",
+        "tags": [
+          "Cats Management"
+        ]
+      },
+      "delete": {
+        "operationId": "CatsController_remove",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Cat deleted."
+          },
+          "400": {
+            "description": "Invalid ID format."
+          },
+          "404": {
+            "description": "Cat not found."
+          }
+        },
+        "summary": "Remove a cat from the database",
+        "tags": [
+          "Cats Management"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Cat Shelter Foundation API",
+    "description": "Basic system for tracking shelter animals. Assignment #1.",
+    "version": "1.0",
+    "contact": {
+
+    }
+  },
+  "tags": [
+    {
+      "name": "Cats Management",
+      "description": "Core operations for cat records"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "CreateCatDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Barsik",
+            "description": "Name of the cat"
+          },
+          "age": {
+            "type": "number",
+            "example": 2,
+            "description": "Age of the cat"
+          },
+          "breed": {
+            "type": "string",
+            "example": "Siamese",
+            "description": "Breed of the cat"
+          },
+          "history": {
+            "type": "string",
+            "example": "Found in 2024"
+          },
+          "description": {
+            "type": "string",
+            "example": "Very friendly"
+          }
+        },
+        "required": [
+          "name",
+          "age",
+          "breed"
+        ]
+      }
+    }
+  }
+}
