@@ -1,0 +1,43 @@
+# Node.js
+node_modules/
+dist/
+dict/
+build/
+npm-debug.log*
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+venv/
+.venv/
+
+# Allure & Coverage
+allure-results/
+allure-report/
+htmlcov/
+coverage.xml
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDEs
+.vscode/
+.idea/
+*.iml
+
+# --- ДОБАВЛЕНО ДЛЯ GO ---
+# Игнорируем скомпилированные бинарники в папке cat-reader
+cat-reader-app
+cat-reader/cat-reader
+cat-reader/cat-reader-app
+
+# --- ДОБАВЛЕНО ДЛЯ DOCKER ---
+# Игнорируем локальную папку с данными БД, если она создается
+postgres_data/
+
+# OS
+.DS_Store
+Thumbs.db

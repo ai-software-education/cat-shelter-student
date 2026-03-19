@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  # 1. База данных
+  db:
+    image: postgres:15
+    container_name: shelter_db
+    restart: always
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: shelter
+    ports:
+      - "5433:5432"
+    networks:
+      - shelter-network
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # 2. Основной сервис NestJS
+  nestjs-app:
+    build: .
+    container_name: nestjs_main
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_HOST: db
+      DATABASE_PORT: 5432
+      DATABASE_USER: user
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: shelter
+    depends_on:
+      - db
+    networks:
+      - shelter-network
+
+  # 3. Высокопроизводительный сервис на Go
+  cat-reader:
+    build: ./cat-reader
+    container_name: go_reader
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - shelter-network
+    environment:
+      DB_HOST: db
+      DB_PORT: 5432
+
+networks:
+  shelter-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
