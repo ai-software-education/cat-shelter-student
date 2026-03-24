@@ -1,0 +1,7 @@
+INFO     test_get_cat_contract:test_get_cat_contract.py:60 [GET CAT][POSITIVE] Get cat by valid Id
+INFO     test_get_cat_contract:test_get_cat_contract.py:65 Создаём кота: {'name': 'TestCat_44f90e89', 'age': 1, 'breed': 'Test'}
+INFO     test_get_cat_contract:test_get_cat_contract.py:72 Запрашиваем кота по ID 14
+INFO     test_get_cat_contract:test_get_cat_contract.py:78 HTTP-статус: 200
+INFO     test_get_cat_contract:test_get_cat_contract.py:81 Проверка контракта
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'

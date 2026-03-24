@@ -1,0 +1,6 @@
+INFO     test_get_cat_contract:test_get_cat_contract.py:92 [GET CAT][NEGATIVE] Get cat by invalid Id
+INFO     test_get_cat_contract:test_get_cat_contract.py:96 Запрашиваем по некорректному ID: 9999
+INFO     test_get_cat_contract:test_get_cat_contract.py:101 HTTP-статус: 404
+INFO     test_get_cat_contract:test_get_cat_contract.py:104 Проверка контракта
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'

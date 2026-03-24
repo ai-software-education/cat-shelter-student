@@ -1,0 +1,6 @@
+INFO     test_get_cat_contract:test_get_cat_contract.py:12 [GET CATS][POSITIVE] Get all cats
+INFO     test_get_cat_contract:test_get_cat_contract.py:17 Создаём кота: {'name': 'TestCat_9f9eb0d1', 'age': 1, 'breed': 'Test'}
+INFO     test_get_cat_contract:test_get_cat_contract.py:23 Запрашиваем всех котов
+DEBUG    test_get_cat_contract:test_get_cat_contract.py:25 Список котов: [{'id': 13, 'name': 'TestCat_9f9eb0d1', 'age': 1, 'breed': 'Test', 'history': None, 'description': None}]
+INFO     test_get_cat_contract:test_get_cat_contract.py:30 HTTP-статус: 200
+INFO     test_get_cat_contract:test_get_cat_contract.py:33 Проверка контракта

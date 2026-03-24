@@ -1,0 +1,10 @@
+INFO     test_create_cat:test_create_cat.py:11 [API] Checking creaton and availability
+INFO     test_create_cat:test_create_cat.py:18 Получаем исходный список котов
+DEBUG    test_create_cat:test_create_cat.py:21 Список котов: []
+INFO     test_create_cat:test_create_cat.py:25 Создаём кота: {'name': 'TestCat_be7e758f', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat:test_create_cat.py:30 Получаем созданного кота по его Id: 1
+INFO     test_create_cat:test_create_cat.py:34 Получаем список котов после добавления
+DEBUG    test_create_cat:test_create_cat.py:37 Список котов: [{'id': 1, 'name': 'TestCat_be7e758f', 'age': 1, 'breed': 'Test', 'history': None, 'description': None}]
+INFO     test_create_cat:test_create_cat.py:42 HTTP-статус создания: 201
+INFO     test_create_cat:test_create_cat.py:44 HTTP-статус получения: 200
+INFO     test_create_cat:test_create_cat.py:48 Количество котов после добавления: 1

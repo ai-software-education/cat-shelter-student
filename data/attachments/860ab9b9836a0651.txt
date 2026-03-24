@@ -1,0 +1,6 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:35 [CREATE CAT][NEGATIVE] duplicate name
+INFO     test_create_cat_contract:test_create_cat_contract.py:43 Создаём первого кота: {'name': 'duplicated_name', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:48 Попытка создать второго с тем же именем : {'name': 'duplicated_name', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:54 HTTP-статус 1-го запроса: 201
+INFO     test_create_cat_contract:test_create_cat_contract.py:58 HTTP-статус 2-го запроса: 409
+INFO     test_create_cat_contract:test_create_cat_contract.py:62 Проверка контракта

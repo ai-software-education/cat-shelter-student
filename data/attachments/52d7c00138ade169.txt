@@ -1,0 +1,7 @@
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:12 [DELETE CAT][POSITIVE] Delete cat by valid Id
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:17 Создаём кота: {'name': 'TestCat_6fca13f6', 'age': 1, 'breed': 'Test'}
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:24 Удаляем кота
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:29 HTTP-статус: 204
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:32 Проверка контракта
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'

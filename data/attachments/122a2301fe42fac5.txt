@@ -1,0 +1,4 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:11 [CREATE CAT][POSITIVE] valid payload
+INFO     test_create_cat_contract:test_create_cat_contract.py:18 Создание нового кота: {'name': 'TestCat_dc0f5c08', 'age': 1, 'breed': 'Test'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:24 HTTP-статус: 201
+INFO     test_create_cat_contract:test_create_cat_contract.py:27 Проверка контракта

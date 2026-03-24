@@ -1,0 +1,6 @@
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:44 [DELETE CAT][NEGATIVE] Delete cat by invalid Id
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:48 Запрашиваем по некорректному ID: 1.5
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:53 HTTP-статус: 400
+INFO     test_delete_cat_contract:test_delete_cat_contract.py:56 Проверка контракта
+DEBUG    parse:parse.py:444 format '/cats' -> '/cats'
+DEBUG    parse:parse.py:444 format '/cats/{id}' -> '/cats/(?P<id>[^\\/]*)'

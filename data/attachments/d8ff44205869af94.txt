@@ -1,0 +1,9 @@
+INFO     test_create_cat:test_create_cat.py:56 [API] Checking for multiple cat creation
+INFO     test_create_cat:test_create_cat.py:66 Создаём котов и добавляем их Id в список
+DEBUG    test_create_cat:test_create_cat.py:69 Созданный кот: {'name': 'TestCat_05a95d9b', 'age': 1, 'breed': 'Test', 'history': None, 'description': None, 'id': 2}
+DEBUG    test_create_cat:test_create_cat.py:69 Созданный кот: {'name': 'TestCat_cc24be75', 'age': 1, 'breed': 'Test', 'history': None, 'description': None, 'id': 3}
+DEBUG    test_create_cat:test_create_cat.py:69 Созданный кот: {'name': 'TestCat_be4cc800', 'age': 1, 'breed': 'Test', 'history': None, 'description': None, 'id': 4}
+INFO     test_create_cat:test_create_cat.py:73 Получаем всех котов и их Id
+DEBUG    test_create_cat:test_create_cat.py:76 Список котов: [{'id': 2, 'name': 'TestCat_05a95d9b', 'age': 1, 'breed': 'Test', 'history': None, 'description': None}, {'id': 3, 'name': 'TestCat_cc24be75', 'age': 1, 'breed': 'Test', 'history': None, 'description': None}, {'id': 4, 'name': 'TestCat_be4cc800', 'age': 1, 'breed': 'Test', 'history': None, 'description': None}]
+INFO     test_create_cat:test_create_cat.py:80 Сравниваем Id созданных и полученных из БД котов
+DEBUG    test_create_cat:test_create_cat.py:81 Список Id созданных котов: [2, 3, 4], Список Id из БД [2, 3, 4]

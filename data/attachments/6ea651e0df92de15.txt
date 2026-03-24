@@ -1,0 +1,4 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:71 [CREATE CAT][POSITIVE] payload with optional fields
+INFO     test_create_cat_contract:test_create_cat_contract.py:78 Создание кота с optional-полями: {'name': 'TestCat_ea3c8de2', 'age': 1, 'breed': 'Test', 'history': 'Found in 2024', 'description': 'Very friendly'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:84 HTTP-статус: 201
+INFO     test_create_cat_contract:test_create_cat_contract.py:87 Проверка контракта

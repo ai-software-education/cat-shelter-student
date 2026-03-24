@@ -1,0 +1,3 @@
+INFO     test_get_cat_contract:test_get_cat_contract.py:41 [GET CATS][POSITIVE] Get empty list
+INFO     test_get_cat_contract:test_get_cat_contract.py:49 HTTP-статус: 200
+INFO     test_get_cat_contract:test_get_cat_contract.py:52 Проверка контракта

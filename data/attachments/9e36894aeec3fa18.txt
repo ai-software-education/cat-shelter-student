@@ -1,0 +1,3 @@
+INFO     test_create_cat:test_create_cat.py:91 [API] borderline name length
+INFO     test_create_cat:test_create_cat.py:98 Попытка создания кота с именем: ' '
+INFO     test_create_cat:test_create_cat.py:103 HTTP-статус: 400

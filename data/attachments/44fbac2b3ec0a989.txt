@@ -1,0 +1,5 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:104 [CREATE CAT][NEGATIVE] invalid payload
+INFO     test_create_cat_contract:test_create_cat_contract.py:108 Попытка создания с недопустимым payload: missing 'age'
+DEBUG    test_create_cat_contract:test_create_cat_contract.py:109 Payload: {'name': 'TestCat_', 'breed': 'B'}
+INFO     test_create_cat_contract:test_create_cat_contract.py:115 HTTP-статус: 400
+INFO     test_create_cat_contract:test_create_cat_contract.py:119 Проверка контракта

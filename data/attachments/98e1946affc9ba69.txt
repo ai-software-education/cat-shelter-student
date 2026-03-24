@@ -1,0 +1,12 @@
+INFO     test_delete_cat:test_delete_cat.py:12 [API] Delete cat
+INFO     test_delete_cat:test_delete_cat.py:16 Получаем исходный список котов
+DEBUG    test_delete_cat:test_delete_cat.py:18 Список котов: []
+INFO     test_delete_cat:test_delete_cat.py:23 Создаем кота: {'name': 'TestCat_7228370d', 'age': 1, 'breed': 'Test'}
+INFO     test_delete_cat:test_delete_cat.py:28 Удаляем по кота ID: 7
+INFO     test_delete_cat:test_delete_cat.py:32 Попытка получить кота по ID
+INFO     test_delete_cat:test_delete_cat.py:36 Получаем список котов после удаления
+DEBUG    test_delete_cat:test_delete_cat.py:38 Список котов: []
+INFO     test_delete_cat:test_delete_cat.py:45 HTTP-статус удаления: 204
+INFO     test_delete_cat:test_delete_cat.py:48 HTTP-статус удаления: 404
+INFO     test_delete_cat:test_delete_cat.py:52 Количество котов до удаления: 0
+INFO     test_delete_cat:test_delete_cat.py:53 Количество котов после удаления: 0

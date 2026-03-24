@@ -1,0 +1,7 @@
+INFO     test_create_cat:test_create_cat.py:130 [API] Checking the immutability of the DB when trying to add invalid cat
+INFO     test_create_cat:test_create_cat.py:137 Получаем исходный список котов
+DEBUG    test_create_cat:test_create_cat.py:139 Список котов: []
+INFO     test_create_cat:test_create_cat.py:143 Добавляем кота с невалидными данными {'name': 'A', 'age': -1, 'breed': 'Test'}
+INFO     test_create_cat:test_create_cat.py:148 Список после попытки добавления
+DEBUG    test_create_cat:test_create_cat.py:150 Список котов: []
+INFO     test_create_cat:test_create_cat.py:157 Количество до попытки добавления - 0, после - 0

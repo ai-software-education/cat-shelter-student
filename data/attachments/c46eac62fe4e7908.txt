@@ -1,0 +1,5 @@
+INFO     test_create_cat_contract:test_create_cat_contract.py:104 [CREATE CAT][NEGATIVE] invalid payload
+INFO     test_create_cat_contract:test_create_cat_contract.py:108 Попытка создания с недопустимым payload: invalid type of 'name' and 'breed'
+DEBUG    test_create_cat_contract:test_create_cat_contract.py:109 Payload: {'name': 5, 'age': 5, 'breed': 5}
+INFO     test_create_cat_contract:test_create_cat_contract.py:115 HTTP-статус: 400
+INFO     test_create_cat_contract:test_create_cat_contract.py:119 Проверка контракта

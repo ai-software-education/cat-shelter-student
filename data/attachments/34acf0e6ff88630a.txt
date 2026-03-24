@@ -1,0 +1,5 @@
+INFO     test_get_cat:test_get_cat.py:13 [API] Get cat by Id
+INFO     test_get_cat:test_get_cat.py:19 Создаём кота: {'name': 'TestCat_961da3fb', 'age': 1, 'breed': 'Test'}
+INFO     test_get_cat:test_get_cat.py:26 Получаем созданного кота по его Id: 8
+DEBUG    test_get_cat:test_get_cat.py:28 Найденный кот: {'id': 8, 'name': 'TestCat_961da3fb', 'age': 1, 'breed': 'Test', 'history': None, 'description': None}
+INFO     test_get_cat:test_get_cat.py:33 Проверяем поля в ответе
