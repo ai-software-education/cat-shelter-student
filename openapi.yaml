@@ -18,7 +18,22 @@
         },
         "responses": {
           "201": {
-            "description": "The cat has been successfully registered."
+            "description": "The cat has been successfully registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatDto"
+                },
+                "example": {
+                  "id": 1,
+                  "name": "Barsik",
+                  "age": 2,
+                  "breed": "Siamese",
+                  "history": "Found in 2024",
+                  "description": "Very friendly"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid input data."
@@ -37,7 +52,17 @@
         "parameters": [],
         "responses": {
           "200": {
-            "description": "Return list of cats."
+            "description": "List of cats.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CatDto"
+                  }
+                }
+              }
+            }
           }
         },
         "summary": "Get all cats in the shelter",
@@ -58,13 +83,20 @@
             "description": "Unique numerical ID of the cat",
             "schema": {
               "example": 1,
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Cat data retrieved successfully."
+            "description": "Cat data retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatDto"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid ID format. Expected an integer."
@@ -86,7 +118,7 @@
             "required": true,
             "in": "path",
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -125,17 +157,54 @@
   "servers": [],
   "components": {
     "schemas": {
+      "CatDto": {
+        "type": "object",
+        "required": ["id", "name", "age", "breed"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "example": "Barsik",
+            "description": "Unique name of the cat"
+          },
+          "age": {
+            "type": "integer",
+            "minimum": 0,
+            "example": 2
+          },
+          "breed": {
+            "type": "string",
+            "example": "Siamese"
+          },
+          "history": {
+            "type": "string",
+            "nullable": true,
+            "example": "Found in 2024"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "example": "Very friendly"
+          }
+        }
+      },
       "CreateCatDto": {
         "type": "object",
         "properties": {
           "name": {
             "type": "string",
+            "minLength": 2,
             "example": "Barsik",
-            "description": "Name of the cat"
+            "description": "Unique name of the cat"
           },
           "age": {
-            "type": "number",
+            "type": "integer",
             "example": 2,
+            "minimum": 0,
             "description": "Age of the cat"
           },
           "breed": {
