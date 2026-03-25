@@ -18,8 +18,15 @@
         },
         "responses": {
           "201": {
-            "description": "The cat has been successfully registered."
-          },
+            "description": "The cat has been successfully registered.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatDto"
+                }
+              }
+            }
+           },
           "400": {
             "description": "Invalid input data."
           },
@@ -51,13 +58,23 @@
             "in": "query",
             "description": "Filter by adoption status (true/false)",
             "schema": {
-              "type": "string"
+              "type": "boolean"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Success"
+            "description": "List of cats.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CatDto"
+                  }
+                }
+              }
+            }
           }
         },
         "summary": "Search shelter database",
@@ -77,7 +94,7 @@
             "in": "path",
             "description": "Unique numerical ID of the cat",
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -93,7 +110,14 @@
         },
         "responses": {
           "200": {
-            "description": "Cat info updated successfully."
+            "description": "Cat info updated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatDto"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid input or ID"
@@ -120,13 +144,20 @@
             "in": "path",
             "description": "Unique numerical ID of the cat",
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Cat data retrieved successfully."
+            "description": "Cat data retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatDto"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid ID format. Expected an integer."
@@ -149,7 +180,7 @@
             "required": true,
             "in": "path",
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -180,7 +211,7 @@
             "required": true,
             "in": "path",
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -192,7 +223,7 @@
                 "type": "object",
                 "properties": {
                   "userId": {
-                    "type": "number",
+                    "type": "integer",
                     "description": "Internal ID of the adopter"
                   }
                 }
@@ -202,7 +233,14 @@
         },
         "responses": {
           "200": {
-            "description": "Adoption process completed."
+            "description": "Adoption process completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CatDto"
+                }
+              }
+            }
           },
           "400": {
             "description": "Cat is already adopted or invalid user ID."
@@ -233,7 +271,12 @@
         },
         "responses": {
           "201": {
-            "description": "User successfully created."
+           "description": "User created",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserDto" }
+              }
+            }
           },
           "400": {
             "description": "Validation failed"
@@ -245,12 +288,20 @@
         ]
       },
       "get": {
-        "description": "Returns a list of all registered users.",
+        "description": "Returns a list of all users.",
         "operationId": "UsersController_findAll",
         "parameters": [],
         "responses": {
           "200": {
-            "description": ""
+            "description": "Users list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/UserDto" }
+                }
+              }
+            }
           }
         },
         "summary": "List all users",
@@ -269,13 +320,18 @@
             "required": true,
             "in": "path",
             "schema": {
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "User found."
+            "description": "User found.",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserDto" }
+              }
+            }
           },
           "400": {
             "description": "Invalid ID format provided."
@@ -300,7 +356,7 @@
             "description": "User ID to delete",
             "schema": {
               "example": 1,
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -333,7 +389,7 @@
             "description": "User ID",
             "schema": {
               "example": 1,
-              "type": "number"
+              "type": "integer"
             }
           }
         ],
@@ -341,9 +397,12 @@
           "200": {
             "description": "Success",
             "content": {
-              "application/json": {
+               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserEntity"
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/CatDto"
+                  }
                 }
               }
             }
@@ -383,6 +442,41 @@
   "servers": [],
   "components": {
     "schemas": {
+      "CatDto": {
+        "type": "object",
+        "required": ["id", "name", "age", "breed"],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 2,
+            "example": "Barsik",
+            "description": "Unique name of the cat"
+          },
+          "age": {
+            "type": "integer",
+            "minimum": 0,
+            "example": 2
+          },
+          "breed": {
+            "type": "string",
+            "example": "Siamese"
+          },
+          "history": {
+            "type": "string",
+            "nullable": true,
+            "example": "Found in 2024"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "example": "Very friendly"
+          }
+        }
+      },
       "CreateCatDto": {
         "type": "object",
         "properties": {
@@ -445,6 +539,23 @@
           }
         }
       },
+      "UserDto": {
+        "type": "object",
+        "required": ["id", "firstName", "lastName"],
+        "properties": {
+          "id": { 
+            "type": "integer" 
+          },
+          "firstName": { 
+            "type": "string", 
+            "minLength": 2 
+          },
+          "lastName": { 
+            "type": "string", 
+            "minLength": 2 
+          }
+        }
+      },
       "CreateUserDto": {
         "type": "object",
         "properties": {
@@ -465,12 +576,6 @@
           "firstName",
           "lastName"
         ]
-      },
-      "UserEntity": {
-        "type": "object",
-        "properties": {
-
-        }
       }
     }
   }
